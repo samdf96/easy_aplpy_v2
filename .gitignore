@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# data used for testing
+fits_data/
+testing.py
+
+# macos specific
+.DS_Store
