@@ -214,3 +214,10 @@ def _save_figure(fitsfile, main_fig, **kwargs):
         plt.show()
     else:
         plt.show()
+
+
+def _setup_map(main_fig, fitsfile):
+    fig = aplpy.FITSFigure(fitsfile,
+                           figure=main_fig)
+    
+    return fig

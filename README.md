@@ -17,6 +17,10 @@ Also provides many keyword arguments to customize the plot, depending mainly on 
 
 By default, inner x and y axis labels are trimmed, but ticks and tick labels are included. The `trim_fully` flag can be set to `True` if all inner properties are to be trimmed.
 
+## easy_aplpy_v2.map
+
+A one-liner to plot a single FITSFigure map with deault settings from `_settings.py`.
+
 # Dependencies
 
 This code was developed and only tested on the specific versions listed below:
