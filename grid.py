@@ -1,7 +1,7 @@
 from itertools import cycle
 
 # load helper functions
-from _helpers import (
+from .helpers import (
     _set_up_figure, _set_up_panels, _set_up_panel,
     _show_map, _save_figure,
     _show_ticksNlabels, _show_title,
