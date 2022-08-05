@@ -131,6 +131,7 @@ dmypy.json
 # data used for testing
 fits_data/
 testing.py
+test.png
 
 # macos specific
 .DS_Store

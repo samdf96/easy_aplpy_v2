@@ -56,7 +56,7 @@ def _set_up_panels(main_fig, fitsfiles, shape, colorbar, **kwargs):
     fitsfiles_iterator = cycle(fitsfiles)
     
     panels = []
-    if colorbar == 'all':
+    if colorbar == 'all' or colorbar == 'none':
         gs = gridspec.GridSpec(shape[0],
                                shape[1],
                                figure=main_fig,
@@ -170,7 +170,7 @@ def _show_colorbar_shared(main_fig, gs, vmin_val, vmax_val, **kwargs):
     cb = plt.colorbar(sm, cax=ax1)
     
 
-def _show_ticksNlabels(fig, gs, trim_flag, **kwargs):
+def _show_ticksNlabels(fig, gs, trim, **kwargs):
     """Sets the ticks, tick labels, and axis label settings. Rids of internal x and y ticks, tick labels, and axis labels when appropriate."""
     fig.tick_labels.set_xformat(settings.tick_label_xformat)
     fig.tick_labels.set_yformat(settings.tick_label_yformat)
@@ -183,19 +183,30 @@ def _show_ticksNlabels(fig, gs, trim_flag, **kwargs):
     fig.frame.set_color(settings.frame_color)
     fig.axis_labels.set_font(size=settings.tick_label_fontsize)
     
-    # check for non-left figures, and rid of axis labels and ticks
-    if not gs.is_first_col():
-        fig.axis_labels.hide_y()
-        if trim_flag:
+    # check for trim flag and trim appropriately
+    if trim == 'inner':
+        if not gs.is_first_col():
+            fig.axis_labels.hide_y()
+        if not gs.is_last_row():
+            fig.axis_labels.hide_x()
+
+    elif trim == 'all':
+        if not gs.is_first_col():
+            fig.axis_labels.hide_y()
             fig.tick_labels.hide_y()
-            fig.ticks.hide_y()
-        
-    if not gs.is_last_row():
-        fig.axis_labels.hide_x()
-        if trim_flag:
+            fig.ticks.hide_y() 
+        if not gs.is_last_row():
+            fig.axis_labels.hide_x()
             fig.tick_labels.hide_x()
             fig.ticks.hide_x()
-
+    
+    elif trim == 'full':
+        fig.axis_labels.hide_x()
+        fig.tick_labels.hide_x()
+        fig.ticks.hide_x()
+        fig.axis_labels.hide_y()
+        fig.tick_labels.hide_y()
+        fig.ticks.hide_y()
     
 def _save_figure(fitsfile, main_fig, **kwargs):
     """Saves the figure.

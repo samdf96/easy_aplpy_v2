@@ -15,7 +15,7 @@ A one-liner to plot a grid of images that looks good by default.
 
 Also provides many keyword arguments to customize the plot, depending mainly on whether individual colorbars, or one shared colorbar is needed.
 
-By default, inner x and y axis labels are trimmed, but ticks and tick labels are included. The `trim_fully` flag can be set to `True` if all inner properties are to be trimmed.
+By default, inner x and y axis labels are trimmed, but ticks and tick labels are included. The `trim` flag can be set to two values to further trim the inner ticks and tick labels (`trim='all'`) or can be set so that no axis labels, ticks, and tick labels are shown on the entire plot (`trim='full'`).
 
 ## easy_aplpy_v2.map
 

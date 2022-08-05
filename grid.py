@@ -10,7 +10,7 @@ from _helpers import (
 
 # plot a grid of maps
 #####################
-def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, plot_title=None, trim_fully=False, **kwargs):
+def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, plot_title=None, trim='inner', **kwargs):
     """Provides a simple interface to APLpy plots. This function generates a single image output, of a series of images in a grid, given by the desired input shape.
 
     Parameters
@@ -20,21 +20,29 @@ def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, 
     shape : tuple
         Constructs a `shape[0] x shape[1]` grid of images. Total number of grids must match length of `fitsfiles` inputted.
     colorbar : str, optional
-        Sets the number of colorbars drawn. `all` will draw an individual colorbar beside each subplot, while `shared` will draw one colorbar on the RHS of the grid, by default 'all'.
+        Sets the number of colorbars drawn., by default 'all'.
+            - 'all' will draw a colorbar beside each grid image.
+            - 'shared' will draw a shared colorbar on the right hand side of the grid layout.
+            - 'none' will bypass all colorbar drawing.
     colorbar_bounds : str, optional
         Sets whether the colorbar minimum and maximum values are automatically computed, or grabbed from vmin and vmax arguments by default 'auto'.
+            - 'auto' will either set the scale per image (`colorbar='all'`) or set the scale globally (`colorbar='shared')
+            - 'manual' will set the scale either per image or globally via the input `vmin` and `vmax` keyword arguments.
     titles : list, optional
         List of subplot titles. `None` will skip drawing titles, by default None.
     plot_title : str, optional
         Sets the overall figure title, by default None.
-    trim_fully " bool, optional
-        Sets whether all inner subplot properties are to be trimmed. These properties include ticks, tick labels, and axis labels. Use of `wspace` may be required to set spacing between colorbar and tick labels.
+    trim_inner " str, optional
+        Sets how much trimming occurs for ticks, tick labels and axis labels, by default 'inner'. 
+            - 'inner' will only trim the inner axis labels, but leave ticks and tick labels. 
+            - 'all' will trim all inner axis labels, ticks, and tick labels.
+            - 'full' will trim all aforementioned inner properties, and outer axis labels, tick and tick labels.
         
 
     Optional Keyword Parameters - **kwargs
     ----------
     figsize : tuple
-        Sets the figure size by matplotlib.figure call, default is `(8.267, 11.692)`.
+        Sets the figure size by matplotlib.figure call, default is `(8.267, 11.692)`. Advisable to keep as equal aspect as possible.
     wspace : float
         Sets the horizontal padding between grid elements by matplotlib.gridspec.GridSpec call, default is 0.15.
     hspace : float
@@ -73,6 +81,10 @@ def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, 
                 global_vmin = panel['vmin']
             if panel['vmax'] > global_vmax:
                 global_vmax = panel['vmax']
+                
+    # creating title iterator if given
+    if titles is not None:
+        titles_iterator = cycle(titles) # create iterator
     
     # plotting grids
     subfigs = []
@@ -86,7 +98,7 @@ def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, 
         
         # show the image
         if colorbar_bounds == 'auto':
-            if colorbar == 'all':
+            if colorbar == 'all' or colorbar == 'none':
                 _show_map(fig, None, None, **kwargs)
             elif colorbar == 'shared':
                 _show_map(fig, global_vmin, global_vmax, **kwargs)
@@ -94,7 +106,7 @@ def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, 
             _show_map(fig, kwargs['vmin'], kwargs['vmax'], **kwargs)
         
         # add in tick and label properties
-        _show_ticksNlabels(fig, gs_current, trim_fully, **kwargs)
+        _show_ticksNlabels(fig, gs_current, trim, **kwargs)
         
         # individual colorbar
         if colorbar == 'all':
@@ -102,7 +114,6 @@ def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, 
 
         # add in titles
         if titles is not None:
-            titles_iterator = cycle(titles) # create iterator
             _show_title(fig, next(titles_iterator))
         
         # append the panels to the list of subfigures
