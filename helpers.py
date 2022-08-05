@@ -11,7 +11,7 @@ from itertools import cycle
 rc('text', usetex=True)
 
 # custom settings import
-from . import settings as settings
+import settings as settings
 
 def _set_up_figure(**kwargs):
     """Returns main figure environment
