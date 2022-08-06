@@ -6,3 +6,4 @@ from . import settings
 # set default settings here
 
 # warning suppresions
+helpers.hide_UserWarning_DrawCall()
