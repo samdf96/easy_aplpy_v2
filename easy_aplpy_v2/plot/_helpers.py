@@ -10,8 +10,8 @@ from matplotlib import rc as rc
 from itertools import cycle
 rc('text', usetex=True)
 
-# custom settings import
-import settings as settings
+# import main package to get access to settings
+import easy_aplpy_v2
 
 def _set_up_figure(**kwargs):
     """Returns main figure environment
@@ -135,12 +135,12 @@ def _show_title(fig, title):
 def _show_colorbar_all(fig, **kwargs):
     """Displays the colorbar to the side of the aplpy FITSFigure."""
     fig.add_colorbar()
-    fig.colorbar.set_location(settings.colorbar_location)
+    fig.colorbar.set_location(easy_aplpy_v2.settings.colorbar_location)
     #fig.colorbar.set_axis_label_text()
-    fig.colorbar.set_axis_label_pad(settings.colorbar_labelpad)
-    fig.colorbar.set_font(size=settings.colorbar_label_fontsize)
-    fig.colorbar.set_axis_label_font(size=settings.colorbar_label_fontsize)
-    fig.colorbar.set_frame_color(settings.frame_color)
+    fig.colorbar.set_axis_label_pad(easy_aplpy_v2.settings.colorbar_labelpad)
+    fig.colorbar.set_font(size=easy_aplpy_v2.settings.colorbar_label_fontsize)
+    fig.colorbar.set_axis_label_font(size=easy_aplpy_v2.settings.colorbar_label_fontsize)
+    fig.colorbar.set_frame_color(easy_aplpy_v2.settings.frame_color)
 
    
 def _show_colorbar_shared(main_fig, gs, vmin_val, vmax_val, **kwargs):
@@ -172,16 +172,16 @@ def _show_colorbar_shared(main_fig, gs, vmin_val, vmax_val, **kwargs):
 
 def _show_ticksNlabels(fig, gs, trim, **kwargs):
     """Sets the ticks, tick labels, and axis label settings. Rids of internal x and y ticks, tick labels, and axis labels when appropriate."""
-    fig.tick_labels.set_xformat(settings.tick_label_xformat)
-    fig.tick_labels.set_yformat(settings.tick_label_yformat)
-    fig.tick_labels.set_font(size=settings.tick_label_fontsize)
+    fig.tick_labels.set_xformat(easy_aplpy_v2.settings.tick_label_xformat)
+    fig.tick_labels.set_yformat(easy_aplpy_v2.settings.tick_label_yformat)
+    fig.tick_labels.set_font(size=easy_aplpy_v2.settings.tick_label_fontsize)
     #fig.ticks.set_xspacing((settings.ticks_xspacing).to(u.degree).value)
     #fig.ticks.set_yspacing((settings.ticks_yspacing).to(u.degree).value)
-    fig.ticks.set_minor_frequency(settings.ticks_minor_frequency)
-    fig.ticks.set_length(settings.tick_length)
-    fig.ticks.set_color(settings.ticks_color)
-    fig.frame.set_color(settings.frame_color)
-    fig.axis_labels.set_font(size=settings.tick_label_fontsize)
+    fig.ticks.set_minor_frequency(easy_aplpy_v2.settings.ticks_minor_frequency)
+    fig.ticks.set_length(easy_aplpy_v2.settings.tick_length)
+    fig.ticks.set_color(easy_aplpy_v2.settings.ticks_color)
+    fig.frame.set_color(easy_aplpy_v2.settings.frame_color)
+    fig.axis_labels.set_font(size=easy_aplpy_v2.settings.tick_label_fontsize)
     
     # check for trim flag and trim appropriately
     if trim == 'inner':

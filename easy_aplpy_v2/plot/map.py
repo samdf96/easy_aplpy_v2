@@ -1,5 +1,5 @@
 # load helper functions
-from .helpers import (
+from ._helpers import (
     _set_up_figure, _setup_map,
     _show_map, _show_title,
     _show_colorbar_all, _save_figure

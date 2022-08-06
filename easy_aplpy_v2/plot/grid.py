@@ -1,7 +1,7 @@
 from itertools import cycle
 
 # load helper functions
-from helpers import (
+from ._helpers import (
     _set_up_figure, _set_up_panels, _set_up_panel,
     _show_map, _save_figure,
     _show_ticksNlabels, _show_title,
@@ -20,7 +20,7 @@ def grid(fitsfiles, shape, colorbar='all', colorbar_bounds='auto', titles=None, 
     shape : tuple
         Constructs a `shape[0] x shape[1]` grid of images. Total number of grids must match length of `fitsfiles` inputted.
     colorbar : str, optional
-        Sets the number of colorbars drawn., by default 'all'.
+        `Set`s the number of colorbars drawn., by default 'all'.
             - 'all' will draw a colorbar beside each grid image.
             - 'shared' will draw a shared colorbar on the right hand side of the grid layout.
             - 'none' will bypass all colorbar drawing.
